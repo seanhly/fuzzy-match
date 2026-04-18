@@ -1,5 +1,7 @@
 # fuzzy-match
 
+![Logo](./docs/icons/512x512.png)
+
 A fast command-line tool for fuzzy string matching using the Damerau-Levenshtein distance algorithm, with a longest-common-substring fallback when no strong match is found.
 
 ## Features
