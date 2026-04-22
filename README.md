@@ -6,11 +6,17 @@ A fast command-line tool for fuzzy string matching using the Damerau-Levenshtein
 
 ## Features
 
-- **Damerau-Levenshtein Distance**: Measures similarity between strings accounting for insertions, deletions, substitutions, and transpositions
-- **Normalized Scoring**: Calculates similarity score as `1 - distance / MAX(queryLength, lineLength)` so higher scores are better
-- **Fallback Matching**: If the best Damerau-Levenshtein similarity is below `0.5`, recalculates every score using the maximal common substring length
-- **Sorted Output**: Results are sorted by similarity score (best matches first)
-- **Efficient Processing**: Handles large input streams with dynamic memory allocation
+- **Damerau-Levenshtein Distance**: Measures similarity between strings
+  accounting for insertions, deletions, substitutions, and transpositions
+- **Normalized Scoring**: Calculates similarity score as `1 - distance /
+  MAX(queryLength, lineLength)` so higher scores are better
+- **Fallback Matching**: If the best Damerau-Levenshtein similarity is equal or
+  below `0.5`, recalculates every score using the maximal common substring
+  length
+- **Sorted Output**: Results are sorted by similarity score (best matches
+  first)
+- **Efficient Processing**: Handles large input streams with dynamic memory
+  allocation
 
 ## Building
 
@@ -75,18 +81,22 @@ $ echo -e "programming\nprograming\nprogram\nprogamming" | fuzzy-match "programm
 ```
 
 ### Fallback to maximal common substring
-If no Damerau-Levenshtein similarity reaches `0.5`, every score is recalculated using the longest common substring length instead.
+If no Damerau-Levenshtein similarity reaches above `0.5`, every score is
+recalculated using the longest common substring length instead.
 
 ## Algorithm
 
-The program first computes a **Damerau-Levenshtein similarity**, based on the minimum number of single-character edits (insertions, deletions, substitutions, and transpositions) needed to transform one string into another.
+The program first computes a **Damerau-Levenshtein similarity**, based on the
+minimum number of single-character edits (insertions, deletions, substitutions,
+and transpositions) needed to transform one string into another.
 
 The primary similarity score is normalized to account for string length differences:
 ```
 similarity_score = 1 - damerau_levenshtein_distance / MAX(query_length, line_length)
 ```
 
-If the highest primary similarity is below `0.5`, the program recalculates every score using the maximal common substring length instead:
+If the highest primary similarity is equal or below `0.5`, the program
+recalculates every score using the maximal common substring length instead:
 ```
 similarity_score = longest_common_substring_length / MAX(query_length, line_length)
 ```

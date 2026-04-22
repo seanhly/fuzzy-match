@@ -147,7 +147,7 @@ int main(const int argc, char *argv[]) {
         line_count++;
     }
 
-    if (max_similarity < 0.5) {
+    if (max_similarity <= 0.5) {
         for (size_t i = 0; i < line_count; i++) {
             lines[i].common_substring_length = maximalCommonSubstringLength(query, lines[i].line);
             lines[i].score = maximalCommonSubstringSimilarity(lines[i].common_substring_length, lines[i].min_len);
